@@ -1,0 +1,33 @@
+{
+  "name": "stact-promise",
+  "version": "1.0.0",
+  "description": "A version of node-stact that supports both callbacks AND promises when executing a stacked method. ",
+  "main": "stact-promise.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "lodash": "^4.16.4",
+    "stact": "0.0.12"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "bench": "~0.3.5",
+    "async": "~0.2.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cpsubrian/node-stact.git"
+  },
+  "homepage": "https://github.com/jhyland87/stact-promise",
+  "keywords": [
+    "flow",
+    "control"
+  ],
+  "author": "Justin Hyland <J@Linux.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhyland87/stact-promise/issues"
+  }
+}
