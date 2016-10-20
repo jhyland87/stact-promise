@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/jhyland87/stact-promise",
   "keywords": [
-    "flow",
-    "control"
+    "flow", "control", "stac", "stact", "bluebird",
+    "stack", "bluebirdjs", "promise", "promises"
   ],
   "author": "Justin Hyland <J@Linux.com>",
   "license": "MIT",
