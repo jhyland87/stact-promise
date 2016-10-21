@@ -12,11 +12,14 @@ Currently, this module is essentially a copy of **[node-stact](https://github.co
 
 ##### New Methods/Functions
 
-| Method | Callback/Promise | Description |
-|:-----------|------------|:------------:|
-| `exec`       | Both     | Blah blah..     
-| `execLeft`   | Both     | Blah blah..     
-| `execIdx`    | Both     | Blah blah.. 
+| Method     | Return Type/Value | Description |
+|:-----------|:------------:|:------------ |
+| `exec`       | Callback\|Promise     | Blah blah..     
+| `execLeft    | Callback\|Promise     | Blah blah..     
+| `execIdx     | Callback\|Promise     | Blah blah.. 
+| `moveItem`   | Boolean     | Move a stack item to a new index
+| `swapItems`  | Boolean     | Swap two stack items (better than move, typically)
+| `count`      | Numeric     | Was cutting wood all day
 
 ### Examples
 Assume all of the examples are acting on a Stack object instance that was initiated using the below code:
