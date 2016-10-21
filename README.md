@@ -10,6 +10,8 @@ Currently, this module is essentially a copy of **[node-stact](https://github.co
  - Add the functionality found in the [node-stact-hooks](https://github.com/cpsubrian/node-stact-hooks) module.
  - *More to come... maybe*
 
+##### New Methods/Functions
+
 | Method | Callback/Promise | Description |
 |:-----------|------------|:------------:|
 | `exec`       | Both     | Blah blah..     
