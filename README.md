@@ -15,8 +15,8 @@ Currently, this module is essentially a copy of **[node-stact](https://github.co
 | Method     | Return Type/Value | Description |
 |:-----------|:------------:|:------------ |
 | `exec`       | Callback\|Promise     | Blah blah..     
-| `execLeft    | Callback\|Promise     | Blah blah..     
-| `execIdx     | Callback\|Promise     | Blah blah.. 
+| `execLeft`    | Callback\|Promise     | Blah blah..     
+| `execIdx`     | Callback\|Promise     | Blah blah.. 
 | `moveItem`   | Boolean     | Move a stack item to a new index
 | `swapItems`  | Boolean     | Swap two stack items (better than move, typically)
 | `count`      | Numeric     | Was cutting wood all day
