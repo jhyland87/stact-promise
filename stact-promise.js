@@ -1,19 +1,19 @@
 const Stact   = require( 'stact' )
 const Promise = require( 'bluebird' )
-const _ 	  = require( 'lodash' )
+//const _       = require( 'lodash' )
+const _       = require( 'moar-lodash' )
 
 const StactClass = Stact.Stact
 
-/*
-StactClass.prototype.foo = function( str ){ 
-	console.log('str:',str) 
+function tof ( item ) {
+  return _.typeof( item )
 }
-
-module.exports = function (options, items) {
-  return new Stact(options, items);
+function tof2 ( item ) {
+  return _.typeof( item, true )
 }
-
-*/
+function _typ( item ){
+  return _.type( item) 
+}
 
 /**
  * Get the function farthest to the right in the arguments provided. If the `drop` argument is
@@ -25,143 +25,177 @@ module.exports = function (options, items) {
  * @returns {function=}         Returns the function found, or undefined
  */
 function getCb( args, drop ){
-    if( _.isNumber( drop ) ){
+    if ( _.isNumber( drop ) ){
         args = _.drop( args, drop )
     }
 
     return _.chain( args ).findLast( a => _.isFunction( a ) ).value()
 }
 
-/*
-// Example of how to only allow a callback in the last two arguments
-var getFullName = ( first, last, middleOrCb, cb ) => {
-    return new Promise( ( res, rej ) => {
+/**
+ * Execute an item (function)in the stack
+ */
+function execStacItem() {
+  let _f = data => ({
+    data   : data,
+    result : false
+  })
 
-        // Do cool stuff
+  let _t = data => ({
+    data   : data,
+    result : true
+  })
 
-    } ).asCallback( getCb( arguments, 2 ) )
-    // Obviously, if any of the arguments could be a callback, then just use `arguments` in  asCallback()
+  try {
+    // (func, thisArg, args, cb)
+    let result = fastApply( self._getFunc( item ), item, args, finish( i ) )
+
+    console.log( '[execStackItem] result (type: %s):', typeof result, result )
+    return _t( result )
+  }
+  catch( err ){
+    if ( ! _.size( err ) ){
+      return _f( 'Unknown error executing stacked function' )
+    }
+
+    return _f( err )
+  }
 }
-*/
 
-// Save the original run method
-StactClass.prototype.runOrig = StactClass.prototype.run
+StactClass.prototype.execFirst = function () {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
+
+  //console.log('self (%s):', _.size(self), self)
+  this._stack = _.drop( this._stack )
+}
+
+StactClass.prototype.execLast = function () {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
+
+  //console.log('self (%s):', _.size(self), self)
+  this._stack = _.dropRight( this._stack )
+}
+
+StactClass.prototype.exec = function () {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
+
+_.forEach([
+    //1, 2,
+    true, 1, 5, 'some string', 1.2, '3.4', ['foo','nar'], {first:'j'}, '1.2.3', a => console.log( 'test' ) 
+  ], function(value, key) {
+  //console.log( '[ARR] key: %s; val: %s', key, value )
+  console.log( '[ARR] key: %s; value: %s; typeof: %s; _.typeof: %s; _.type: %s (invistigate: %s)',
+    '???', value.toString(), typeof value, tof( value ), _typ( value ), tof2( value ) )
+
+
+})
+/*
+  _.forEach( [
+  //true, 1, 5, 'some string', 1.5, [1,2], {first:'j'}, '1.2.3', a => console.log( 'test' )
+  1, true, 'str'
+], a => function(value) {
+  console.log( '[ARR] -------------\nasdf\n------------' )
+  //console.log( 'key: %s; value: %s; typeof: %s; _.typeof: %s','???', value.toString(), typeof value, to( value ) )
+  //console.log( 'value: %s; typeof: %s', value, typeof value)
+  console.log( '-------------' )
+})*/
+
+  // Get the function from the end of the arguments, or undefined
+  let cb      = getCb( arguments )
+
+  console.log('_.typeof(cb):', tof(cb))
+
+  // If a callback was found, then get all but the last argument 
+  // for the args (otherwise, get all)
+  let args    = ( cb ? _.dropRight( arguments ) : arguments )
+
+  return new Promise( ( res, rej ) => {
+    if ( ! self.length ){
+      return rej( 'No stacked functions saved' )
+    }
+
+    const finish = i => ( err, result ) => {
+      if ( abort ){
+        return rej( 'Aborted..' )
+      }
+
+      if ( err ) {
+        abort = true
+        return rej( err )
+      }
+
+      results[i] = result
+
+      if ( ++count >= self.length ) {
+        return res( results )
+      }
+    }
+
+    self.forEach( ( item, i ) => {
+      console.log('self.forEach self (%s):', self.length, self)
+
+      try {
+        //let result = fastApply( self._getFunc( item ), item, args, finish( i ) )
+        let result = execStacItem( )
+
+        return res( result )
+      }
+      catch( err ){
+        if ( ! _.size( err ) ){
+          err = 'Unknown error executing stacked function'
+        }
+
+        return rej( err )
+      }
+    })
+
+  }).asCallback( cb )
+
+}
+
+StactClass.prototype.len = function () {
+  let self = this
+
+  console.log( '# LENGTH ----------------------------')
+  console.log( 'self:', self )
+  console.log( 'self.prototype:', self.prototype )
+  console.log( 'self.prototype:', self.cs )
+  console.log( 'self.length:', self.length )
+  console.log( '# -----------------------------------')
+}
 
 
 // Silly optimization instead of calling apply().
-function fastApply ( func, thisArg, args, cb ) {
-	console.log('[fastApply] args (%s):',args.length, args)
+function fastApply (func, thisArg, args, cb) {
+  console.log('[fastApply] func name: %s; Args (%s):', func.name, args.length, args )
 
-	if( ! args ){
-		args = []
-	}
-	else if( ! _.isArray( args ) ){
-		args = [ args ]
-	}
+  if ( ! _.isArray( args ) ){
+    if ( ! args ){
+      args = []
+    }
+    else {
+      args = [ args ]
+    }
+  }
 
-	if( _.isFunction( cb ) ){
-		args.push( cb )
-	}
+  if ( ! _.isFunction( cb ) ){
+    console.log('WTF IS WITH CB - ', cb)
+    cb = function(){ 
+      console.log( 'DEFAULT FUNCTION THINGY - arguments:', arguments )
+    }
+  }
 
-
-	return func.apply( thisArg, args getCb( args ) )
-
-	/*
-  	switch ( args.length ) {
-    	case 1:
-      		return func.call( thisArg, cb )
-    	case 2:
-      		return func.call( thisArg, args[0], cb )
-    	case 3:
-      		return func.call( thisArg, args[0], args[1], cb )
-    	case 4:
-      		return func.call( thisArg, args[0], args[1], args[2], cb )
-    	case 5:
-      		return func.call( thisArg, args[0], args[1], args[2], args[3], cb )
-    	case 6:
-      		return func.call( thisArg, args[0], args[1], args[2], args[3], args[4], cb )
-    	case 7:
-      		return func.call( thisArg, args[0], args[1], args[2], args[3], args[4], args[5], cb )
-    	case 8:
-      		return func.call( thisArg, args[0], args[1], args[2], args[3], args[4], args[5], args[6], cb )
-   }
-   */
+  return func.apply( thisArg, _.concat( args, cb ) )
 }
-
-/*
-this._getFunc = options.getFunc || function getFunc (item) {
-	if (typeof self._func === 'function') {
-		return self._func
-	}
-
-	if (self._funcProp) {
-		return item[self._funcProp]
-	}
-
-	return item
-}
-*/
-
-StactClass.prototype.run = function () {
- 	let self 	= this
-    let results = []
-    let count 	= 0
-    //let cb 		= arguments[ arguments.length - 1 ]
-    let cb  	= getCb( arguments )
-    let args 	= arguments
-    let abort 	= false
-
-  	console.log('[finish] abort: ',abort)
-  	console.log('[finish] cb:',cb)
-
-  	if ( ! this.length ){
-  		if( _.isFunction( cb ) ){
-  			return cb()
-  		}
-
-  		return
-  	}
-
-  	if( _.isFunction( cb ) ){
-  		args = _.dropRight( args )
-  	}
-
-  	function finish ( i ) {
-  		console.log('[Stact.run > finish] abort:',abort)
-
-    	return ( function runFinish ( err, result ) {
-  			console.log('[Stact.run > finish > runFinish] abort:',abort)
-
-      		if ( abort ){
-      			return
-      		}
-
-      		if ( err ) {
-        		abort = true
-        		return cb(err, results)
-      		}
-      		
-      		results[i] = result
-      		
-      		if ( ++count >= self.length ) {
-        		cb( null, results )
-      		}
-    	})
-  	}
-
-  	this.forEach( function iterator ( item, i ) {
-  		let thisVal = self._getFunc( item )
-
-  		console.log( '[Stact.run > forEach] item: %s', item )
-  		console.log( '[Stact.run > forEach] i: %s', i )
-  		console.log( '[Stact.run > forEach > thisVal]:',thisVal ) )
-
-    	fastApply( thisVal, item, args, finish( i ) )
-  	})
-}
-
-
-//console.log( 'Keys:', _.keys( Stact.Stact.prototype ) )
 
 module.exports = function ( options, items ) {
    return new StactClass( options, items )

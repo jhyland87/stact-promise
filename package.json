@@ -1,6 +1,6 @@
 {
   "name": "stact-promise",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A version of node-stact that supports both callbacks AND promises when executing a stacked method. ",
   "main": "stact-promise.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "lodash": "^4.16.4",
+    "moar-lodash": "^2.7.1",
     "stact": "0.0.12"
   },
   "devDependencies": {
@@ -22,8 +23,19 @@
   },
   "homepage": "https://github.com/jhyland87/stact-promise",
   "keywords": [
-    "flow", "control", "stac", "stact", "bluebird",
-    "stack", "bluebirdjs", "promise", "promises"
+    "flow",
+    "control",
+    "stac",
+    "stact",
+    "bluebird",
+    "stack",
+    "bluebirdjs",
+    "promise",
+    "promises",
+    "hooks",
+    "plugin",
+    "plugins",
+    "observer"
   ],
   "author": "Justin Hyland <J@Linux.com>",
   "license": "MIT",
