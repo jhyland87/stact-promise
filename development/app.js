@@ -72,7 +72,8 @@ stack.add(function testFuncB( a, b ) {
   return 'testFuncB finished; Args: ' + JSON.stringify( arguments )
 })
 
-stack.len()
+console.log('stack.count:', stack.count())
+
 stack.execFirst('failthis','bar','baz', function (err, results) {
   if( err ){
     console.log('Error:', err)
@@ -82,7 +83,7 @@ stack.execFirst('failthis','bar','baz', function (err, results) {
   console.log('Results:',results)
 })
 
-stack.len()
+console.log('stack.count:', stack.count())
 
 stack.exec('failthis','bar','baz', function (err, results) {
   if( err ){

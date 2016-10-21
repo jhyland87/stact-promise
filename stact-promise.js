@@ -62,52 +62,14 @@ function execStacItem() {
   }
 }
 
-StactClass.prototype.execFirst = function () {
-  let self    = this
-  let results = []
-  let count   = 0
-  let abort   = false
-
-  //console.log('self (%s):', _.size(self), self)
-  this._stack = _.drop( this._stack )
-}
-
-StactClass.prototype.execLast = function () {
-  let self    = this
-  let results = []
-  let count   = 0
-  let abort   = false
-
-  //console.log('self (%s):', _.size(self), self)
-  this._stack = _.dropRight( this._stack )
-}
-
+/**
+ * Execute the function found at the far right
+ */
 StactClass.prototype.exec = function () {
   let self    = this
   let results = []
   let count   = 0
   let abort   = false
-
-_.forEach([
-    //1, 2,
-    true, 1, 5, 'some string', 1.2, '3.4', ['foo','nar'], {first:'j'}, '1.2.3', a => console.log( 'test' ) 
-  ], function(value, key) {
-  //console.log( '[ARR] key: %s; val: %s', key, value )
-  console.log( '[ARR] key: %s; value: %s; typeof: %s; _.typeof: %s; _.type: %s (invistigate: %s)',
-    '???', value.toString(), typeof value, tof( value ), _typ( value ), tof2( value ) )
-
-
-})
-/*
-  _.forEach( [
-  //true, 1, 5, 'some string', 1.5, [1,2], {first:'j'}, '1.2.3', a => console.log( 'test' )
-  1, true, 'str'
-], a => function(value) {
-  console.log( '[ARR] -------------\nasdf\n------------' )
-  //console.log( 'key: %s; value: %s; typeof: %s; _.typeof: %s','???', value.toString(), typeof value, to( value ) )
-  //console.log( 'value: %s; typeof: %s', value, typeof value)
-  console.log( '-------------' )
-})*/
 
   // Get the function from the end of the arguments, or undefined
   let cb      = getCb( arguments )
@@ -159,20 +121,106 @@ _.forEach([
     })
 
   }).asCallback( cb )
+}
+/**
+ * Execute the last function-type item found in the stack
+ */
+StactClass.prototype.execFirst = function () {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
 
+  /**
+   * Execute the last function-type item found in the stack
+   */
+  return new Promise( ( res, rej ) => {
+    // Logic 
+  }).asCallback( cb )
 }
 
-StactClass.prototype.len = function () {
-  let self = this
+/**
+ * Execute the last function-type item found in the stack
+ */
+StactClass.prototype.execLast = function () {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
 
-  console.log( '# LENGTH ----------------------------')
-  console.log( 'self:', self )
-  console.log( 'self.prototype:', self.prototype )
-  console.log( 'self.prototype:', self.cs )
-  console.log( 'self.length:', self.length )
-  console.log( '# -----------------------------------')
+  /**
+   * Execute the last function-type item found in the stack
+   */
+  return new Promise( ( res, rej ) => {
+    // Logic 
+  }).asCallback( cb )
 }
 
+/**
+ * Execute the function found in the `idx` spot 
+ * @note  The idx variable array-type indexes, starting from 0. So 
+ *        an idx value of 3 returns the 4th value in the stack
+ */
+StactClass.prototype.execIdx = function ( idx ) {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
+
+  if( ! _.typeof( idx, true ) !== 'number' ){
+    // Throw a hissy fit
+  }
+
+  /**
+   * Execute the last function-type item found in the stack
+   */
+  return new Promise( ( res, rej ) => {
+    // Logic 
+  }).asCallback( cb )
+}
+
+/**
+ * Move a stack item from the index fromIdx to toIdx
+ * @note  This will cause other items to get re-indexed as well
+ */
+StactClass.prototype.moveItem = function ( fromIdx, toIdx ) {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
+
+  /**
+   * Execute the last function-type item found in the stack
+   */
+  return new Promise( ( res, rej ) => {
+    // Logic 
+  }).asCallback( cb )
+}
+
+/**
+ * Switch the two items found in the stact stack
+ */
+StactClass.prototype.swapItems = function ( idx1, idx2 ) {
+  let self    = this
+  let results = []
+  let count   = 0
+  let abort   = false
+
+  /**
+   * Execute the last function-type item found in the stack
+   */
+  return new Promise( ( res, rej ) => {
+    // Logic 
+  }).asCallback( cb )
+}
+
+/**
+ * Return the number of items in the object instance
+ * @return {number}   Number of items
+ */
+StactClass.prototype.count = function(){
+  return this.length
+}
 
 // Silly optimization instead of calling apply().
 function fastApply (func, thisArg, args, cb) {
