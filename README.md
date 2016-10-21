@@ -6,7 +6,7 @@ Currently, this module is essentially a copy of **[node-stact](https://github.co
 
 ### Added Functionality
  - Use the [asCallback](http://bluebirdjs.com/docs/api/ascallback.html) method from the  [BluebirdJS](http://bluebirdjs.com/docs/getting-started.html) module to allow *Promises* for the newly created `exec` method, while mantaining compatability with the existing start-guide. `exec` grabs an item in the associated *stack* (by default, `exec` grabs the *next* stack item in the stack, or a numeric value can be provided (in the first param) to grab the stack item found at that index number
- - New methods (listed in table below)
+ - New methods (listed in [examples table](https://github.com/jhyland87/stact-promise#new-methodsfunctions) below)
  - Add the functionality found in the [node-stact-hooks](https://github.com/cpsubrian/node-stact-hooks) module.
  - *More to come... maybe*
 
