@@ -223,7 +223,7 @@ StactClass.prototype.count = function(){
 }
 
 // Silly optimization instead of calling apply().
-function fastApply (func, thisArg, args, cb) {
+function fastApply ( func, thisArg, args, cb ) {
   console.log('[fastApply] func name: %s; Args (%s):', func.name, args.length, args )
 
   if ( ! _.isArray( args ) ){
